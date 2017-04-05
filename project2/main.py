@@ -65,7 +65,7 @@ def write_result(predict_y):
     result_data_frame.to_csv('data/predict.csv', encoding='utf-8')
 
 
-if __name__ == '__main__':
+def model_select():
     result = []
     X, y, predict_x = read_data()
     for train_index, test_index in KFold(n_splits=5).split(X):
@@ -78,5 +78,12 @@ if __name__ == '__main__':
         result.append(res)
     res_df = pd.DataFrame(result, index=range(len(result)))
     print res_df.mean()
+
+
+if __name__ == '__main__':
+    # train_x, train_y, predict_x = read_data()
+    # regressor = GradientBoostingRegressor()
+    # regressor.fit(train_x, train_y)
     # predict_y = regressor.predict(predict_x)
     # write_result(predict_y)
+    model_select()
