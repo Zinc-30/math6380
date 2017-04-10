@@ -7,7 +7,7 @@
 % to avoid loading the natbib package, add option nonatbib:
 % \usepackage[nonatbib]{nips_2016}
 
-\usepackage{nips_2016}
+\usepackage[final]{nips_2016}
 
 % to compile a camera-ready version, add the [final] option, e.g.:
 % \usepackage[final]{nips_2016}
@@ -38,7 +38,6 @@
   Jian Xun \\
   Yu Jinxing \\
   Department of Computer Science\\
-  \texttt{hippo@cs.cranberry-lemon.edu} \\
 }
 
 \begin{document}
@@ -47,16 +46,11 @@
 \maketitle
 
 \begin{abstract}
-  The abstract paragraph should be indented \nicefrac{1}{2}~inch
-  (3~picas) on both the left- and right-hand margins. Use 10~point
-  type, with a vertical spacing (leading) of 11~points.  The word
-  \textbf{Abstract} must be centered, bold, and in point size 12. Two
-  line spaces precede the abstract. The abstract must be limited to
-  one paragraph.
+This is a short report for the mini-project2 of the class Math6380 in HKUST. The project we choose is a regression problem.
 \end{abstract}
 
 \section{introduction}
-We choosed combinatorial drug 20 efficacy data and participated in the kaggle inclass contest.  We are the team "3654". Our best submission gets \textbf{0.001911} Mean-Square-Error. 
+We choosed combinatorial drug 20 efficacy data and participated in the kaggle inclass contest.  We are the team "3654". Our best submission gets \textbf{0.01193} Mean-Square-Error. 
 The dataset contains 140 cancer cell line samples in response to a combination of 20 drugs in 4 dosage levels. There are the discrete dosage levels of 20 drugs, and the real valued response as viability measured by difference between normalized cells and cancer cells. The higher is the viability, the more effective is the drug combination. 120 of the cells viability information are known, our job is to predict the rest 20 cells' viability.
 So the sample size of the datasets is 120, and the features dimension is 20. 
 
@@ -71,34 +65,43 @@ The feature dimension of this dataset is not quite high. And they all have actua
 % We also manually implemented a recursive feature selection method from scratch based on Lasso regression errors on cross validation data. Different from Lasso recursive feature elimination in the reference poster which repeatly eliminates some features, our feature selection method repeatly add a feature until the Lasso regression error on validation dataset does not decrease. The advantage of our method is that it is more efficient than recursive feature elimination. 
 
 \subsection{model selection}
-In this part, We did 5-fold cross validation on the training dataset for model selection. Our models includes LASSO, Ridge Regression, Support Vector Regression, Decision Tree, and Gradient Boosting. We think the key point of this project is how to tune the parameters.
+In this part, We did 5-fold cross validation on the training dataset for model selection. Our models includes LASSO, Ridge Regression, Support Vector Regression, Decision Tree, and Gradient Boosting. \\
+We think the key point of this project is how to tune the parameters.
 
 \section{Results and Discussion}
 We first compare different regression method based on the Mean Square Error through 5-fold cross validation. The training errors are also included to check the overfitting. We then picked several models and trained them on the whole training dataset and submitted them on Kaggle.
 \begin{table}[htbp]
 \centering
-\begin{tabular}{|l|l|l|l|l|}
+\begin{tabular}{|l|l|l|}
 \hline
-train, val &  All features &  PCA  & Kbest & Lasso-error based\\
+model & validation error & training error \\
 \hline
-LASSO & 0.9428, 1.0327 & 0.4411, 0.9553 & 0.9504, 1.039 & 0.9737, 1.0420\\
+lasso($\alpha=0.005$)         &  0.013677 & 0.008775 \\
 \hline
-Ridge Regression & 1e-8, 1.0516 & 1e-8, 1.0516 & 0.0036, 1.4114 & 0.0882, 0.1750\\
+Elastic Net($\alpha=0.01,ratio_{l_1}=0.5$)   &  0.013680 & 0.008796 \\
 \hline
-SVR & 0.5788, 0.9463 & 0.4199, 1.0269 & 0.3111, 0.9262  & 0.2609, 0.6376\\
+ridge($\alpha=20$)         &  0.014146 & 0.009051 \\
 \hline
-Decision tree & 1e-10, 1.675 & 1e-10, 1.2311 & 1e-10, 1.4497 & 4.8e-10, 0.9405\\
+bayes ridge($\alpha_1=10,\alpha_2=0.010$)  &  0.014197 & 0.008665 \\
 \hline
-Gradient Boosting & 1e-6, 1.077 & 1e-3, 1.0538 & 1e-3, 1.0664 & 1.1e-3, 0.5789\\
+svr        &  0.019456 & 0.006158 \\
+\hline
+lars       & 0.021611 & 0.020714 \\
+\hline
+kernel ridge($\alpha=0.01$)  &  0.021955 & 0.014500 \\
+\hline
+lasso Lars($\alpha=0.1$)    &  0.022331 & 0.021887 \\
+\hline
+boost         &  0.023385 & 0.000494 \\
 \hline
 \end{tabular}
 \caption{Cross validation results measured by mean square error for each method}
 \end{table}
 From the results in Table1, 
-An interesting finding we found is that the variance of IC50 values at 72hrs is about 1. If only mean square error is used as evaluation matric, we can get a result with 1 mean square error by predicting the mean.
+We found is that the difference between these regression models' validation error is not quite big. And based on the result we get in the kaggle testing, all team get training error lower than 0.014. We think this problem is a simple task.
 
 \section{Remark on Contributions}
-The project is finished under the discussion and close collaboration of our group members. Hao Xin wrote the code skeleton and compared many regression methods by cross validation. Jinxing Yu tried the baseline using gradient boosting and wrote the majority of the report draft. Xun Jian proposed the recursive feature selection method and implemented it, which got the best cross validation result.
+The project is finished under the discussion and close collaboration of our group members. Hao Xin wrote the code skeleton and wrote the majority of the report draft. Jinxing Yu tuned many regression methods and their parameters by cross validation and tried to get a better test result. Xun Jian proposed some feature selection method and implemented it, which got the best cross validation result.
 
 % \subsubsection*{Acknowledgments}
 
