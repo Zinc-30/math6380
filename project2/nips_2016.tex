@@ -1,0 +1,135 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2016
+%
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2016}
+
+\usepackage{nips_2016}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+% \usepackage[final]{nips_2016}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+
+\title{mini project2}
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+\author{
+  XIN Hao \\
+  Jian Xun \\
+  Yu Jinxing \\
+  Department of Computer Science\\
+  \texttt{hippo@cs.cranberry-lemon.edu} \\
+}
+
+\begin{document}
+% \nipsfinalcopy is no longer used
+
+\maketitle
+
+\begin{abstract}
+  The abstract paragraph should be indented \nicefrac{1}{2}~inch
+  (3~picas) on both the left- and right-hand margins. Use 10~point
+  type, with a vertical spacing (leading) of 11~points.  The word
+  \textbf{Abstract} must be centered, bold, and in point size 12. Two
+  line spaces precede the abstract. The abstract must be limited to
+  one paragraph.
+\end{abstract}
+
+\section{introduction}
+We choosed combinatorial drug 20 efficacy data and participated in the kaggle inclass contest.  We are the team "3654". Our best submission gets \textbf{0.001911} Mean-Square-Error. 
+The dataset contains 140 cancer cell line samples in response to a combination of 20 drugs in 4 dosage levels. There are the discrete dosage levels of 20 drugs, and the real valued response as viability measured by difference between normalized cells and cancer cells. The higher is the viability, the more effective is the drug combination. 120 of the cells viability information are known, our job is to predict the rest 20 cells' viability.
+So the sample size of the datasets is 120, and the features dimension is 20. 
+
+\section{Methodology}
+
+\subsection{data preprocessing}
+This is a quite clean dataset, comparing to cleave dataset in mini-project1. We can easily form a feature matrix using pandas.\\
+
+\subsection{feature engeneering}
+The feature dimension of this dataset is not quite high. And they all have actual meanings, presenting dosage levels of 20 different drugs. So we didn't manually create other features using their combinations.
+% To cope with the high-dimension of features and prevent the learning algorithms from overfitting, we performed dimension reduction or feature selection on features.  We compared severial regression methods including LASSO, Ridge Regression, Support Vector Regression, Decision Tree, and Gradient Boosting.  Two python packages:scikit-learn and pandas were used in the implementation. \\
+% We also manually implemented a recursive feature selection method from scratch based on Lasso regression errors on cross validation data. Different from Lasso recursive feature elimination in the reference poster which repeatly eliminates some features, our feature selection method repeatly add a feature until the Lasso regression error on validation dataset does not decrease. The advantage of our method is that it is more efficient than recursive feature elimination. 
+
+\subsection{model selection}
+In this part, We did 5-fold cross validation on the training dataset for model selection. Our models includes LASSO, Ridge Regression, Support Vector Regression, Decision Tree, and Gradient Boosting. We think the key point of this project is how to tune the parameters.
+
+\section{Results and Discussion}
+We first compare different regression method based on the Mean Square Error through 5-fold cross validation. The training errors are also included to check the overfitting. We then picked several models and trained them on the whole training dataset and submitted them on Kaggle.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+train, val &  All features &  PCA  & Kbest & Lasso-error based\\
+\hline
+LASSO & 0.9428, 1.0327 & 0.4411, 0.9553 & 0.9504, 1.039 & 0.9737, 1.0420\\
+\hline
+Ridge Regression & 1e-8, 1.0516 & 1e-8, 1.0516 & 0.0036, 1.4114 & 0.0882, 0.1750\\
+\hline
+SVR & 0.5788, 0.9463 & 0.4199, 1.0269 & 0.3111, 0.9262  & 0.2609, 0.6376\\
+\hline
+Decision tree & 1e-10, 1.675 & 1e-10, 1.2311 & 1e-10, 1.4497 & 4.8e-10, 0.9405\\
+\hline
+Gradient Boosting & 1e-6, 1.077 & 1e-3, 1.0538 & 1e-3, 1.0664 & 1.1e-3, 0.5789\\
+\hline
+\end{tabular}
+\caption{Cross validation results measured by mean square error for each method}
+\end{table}
+From the results in Table1, 
+An interesting finding we found is that the variance of IC50 values at 72hrs is about 1. If only mean square error is used as evaluation matric, we can get a result with 1 mean square error by predicting the mean.
+
+\section{Remark on Contributions}
+The project is finished under the discussion and close collaboration of our group members. Hao Xin wrote the code skeleton and compared many regression methods by cross validation. Jinxing Yu tried the baseline using gradient boosting and wrote the majority of the report draft. Xun Jian proposed the recursive feature selection method and implemented it, which got the best cross validation result.
+
+% \subsubsection*{Acknowledgments}
+
+% Use unnumbered third level headings for the acknowledgments. All
+% acknowledgments go at the end of the paper. Do not include
+% acknowledgments in the anonymized submission, only in the final paper.
+
+% \section*{References}
+
+% References follow the acknowledgments. Use unnumbered first-level
+% heading for the references. Any choice of citation style is acceptable
+% as long as you are consistent. It is permissible to reduce the font
+% size to \verb+small+ (9 point) when listing the references. {\bf
+%   Remember that you can use a ninth page as long as it contains
+%   \emph{only} cited references.}
+% \medskip
+
+% \small
+
+% [1] Alexander, J.A.\ \& Mozer, M.C.\ (1995) Template-based algorithms
+% for connectionist rule extraction. In G.\ Tesauro, D.S.\ Touretzky and
+% T.K.\ Leen (eds.), {\it Advances in Neural Information Processing
+%   Systems 7}, pp.\ 609--616. Cambridge, MA: MIT Press.
+
+% [2] Bower, J.M.\ \& Beeman, D.\ (1995) {\it The Book of GENESIS:
+%   Exploring Realistic Neural Models with the GEneral NEural SImulation
+%   System.}  New York: TELOS/Springer--Verlag.
+
+% [3] Hasselmo, M.E., Schnell, E.\ \& Barkai, E.\ (1995) Dynamics of
+% learning and recall at excitatory recurrent synapses and cholinergic
+% modulation in rat hippocampal region CA3. {\it Journal of
+%   Neuroscience} {\bf 15}(7):5249-5262.
+
+\end{document}
