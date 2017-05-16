@@ -339,7 +339,7 @@ void Test(char *test_predict_file)
 {
     // predict the drug pairs in test file
     ofstream ofile(test_predict_file);
-    ofile << "SampleID, ComparisonValue" << endl;
+    ofile << "SampleID,ComparisonValue" << endl;
     for (int i = 0; i < test_data_nums; i++){
         Result result = TrainPredictOneData(test_pairs[i], false);
         test_pairs[i].y = result.pred_y;
