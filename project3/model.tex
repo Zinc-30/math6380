@@ -1,0 +1,32 @@
+\section{Drug Sensitivity Rank Models}
+In this section, we introduce our drug sensitivity rank models based on the standard HodgeRank score. Different from the vanilla HodgeRank score, our model further incorporates the binary features of celllines and uses a softmax function to predict the probabilities of different pairwise comparison values. We formulate the parwise rank sensitivity prediction as a classification problem and use the cross-entropy between the predict probability and the ground truth pairwise rank label as the training objective function. The objective function is optimized via SGD (Stochastic gradient decent). \\
+Let there be M genes, N celllines, and K drugs. Let $X(k) \in \mathcal{R}^M$ be the binary genetic feature vector of cell line k, $\beta_1(i) \in \mathcal{R}^M$ be the vector representation of drug i, $\beta_0(i) \in \mathcal{R}$ be the inital score of drug i, where $\beta_1 \in \mathcal{R}^{K \times M}$ and  $\beta_0 \in \mathcal{R} ^{K}$ are  model parameters.
+\\ 
+Given a cell line k with genetic feature vector $X(k)$ and pairwise sensitivity of drug i and j on k, $y(k,i,j) \in \{-1, 0, 1\}$, the rank score is computed as 
+\begin{equation}
+s = \beta_0(i) - \beta_0(j) + X(K)^T (\beta_1(i) - \beta_1(j)).
+\end{equation}
+The score is transformed to prediction probability by 
+\begin{equation}
+p = softmax(Ws + b),
+\end{equation}
+where $p \in \mathcal{R}^3$, $p(0), p(1), p(2)$ indicate the probability that the parwise rank value is -1,0, or 1 resprectively, $W,b \in \mathcal{R}^3$ are model parameters, $softmax(x)_j = \frac{e^{x_j}}{\sum_{i=1}^K x_i}$.The overall loss is the negative log-likelihoods of  the rank prediction:
+\begin{equation}
+\mathcal{L} = - \log (p (y(k,i,j) + 1))
+\end{equation}
+Let $t = Ws + b$, $\hat{y}(k,i,j)\in \mathcal{R}^3$ be the one-hot encoding representation of ground truth label $y(k,i,j)$. The gradients of model parameters can be caculated by the chain rule:
+\begin{align*}
+\frac{\partial \mathcal{L}}{\partial t} &= p - \hat{y}(k,i,j) \\
+\frac{\partial \mathcal{L}}{\partial W} &= \frac{\partial \mathcal{L}}{\partial t} s\\
+\frac{\partial \mathcal{L}}{\partial b} &= \frac{\partial \mathcal{L}}{\partial t} \\
+\frac{\partial \mathcal{L}}{\partial s} &= W^T \frac{\partial \mathcal{L}}{\partial t} \\
+\frac{\partial \mathcal{L}}{\partial \beta_0(i)} &= \frac{\partial \mathcal{L}}{\partial s} \\
+\frac{\partial \mathcal{L}}{\partial \beta_0(j)} &= -\frac{\partial \mathcal{L}}{\partial s} \\
+\frac{\partial \mathcal{L}}{\partial \beta_1(i)} &=  X(k) \frac{\partial \mathcal{L}}{\partial s} \\
+\frac{\partial \mathcal{L}}{\partial \beta_1(j)} &=  -X(k) \frac{\partial \mathcal{L}}{\partial s}
+\end{align*}
+Since the cell line feature $X_(k)$ is a binary feature vector, we also propose an extention to our model by adding model parameters $w_1 \in \mathcal{R}^ M$ to weight the cell line features. Then the rank score is modified as 
+\begin{equation}
+s = \beta_0(i) - \beta_0(j) + (X(K) \odot w_1)^T (\beta_1(i) - \beta_1(j)),
+\end{equation}
+where $\odot$ represents element-wise product of vectors.
