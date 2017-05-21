@@ -1,7 +1,5 @@
 %!TEX root = nips_2016.tex
 \section{introduction}
 We choosed Drug Sensitivity Ranking and participated in the kaggle inclass contest.  We are the team "3654". Our best submission gets accuracy of \textbf{94.74\%}
-The dataset provides 265 Drugs with experiments on 990 cancer cell lines. Drug sensitivity is measured by IC50. There are 3 million comparosion for defferent durgs on each cells, and the result can be 3 types. For example, in cell1, the drug1 may be more sensitivity than drug2, then the pair <drug1,drug2,cell1> will be 1. Among the 3M samples, 1/5 (.6M) comparison values are missing. Our job is to predict these values based on the information given. \\ 
-In particular, we also have the gene describtion of eath cell line, which is a binary genetic features of dimensionality 1250.
-
-
+The dataset provides 265 Drugs with experiments on 990 cancer cell lines. Drug sensitivity is measured by IC50. There are 3 million parwise sensitivity comparisons for different durgs on each cells, and 1250 demensional gene describtion of eath cell line. For example, in cell1, the drug1 may be more sensitive than drug2, then the pair <drug1,drug2,cell1> will be 1. Among the 3M samples, 1/5 (.6M) comparison values are missing. Our job is to predict these values based on the information given. \\
+We formulate the drug sensitivity pairwise ranking as a classification problem and present a classification model based on HodgeRank theory, to predict whether a durg is more, less, or equal sensitive than another drug on a cellline. We further extend the model by adding parameters to adaptively weight the binary gene feature vector, achieving faster convergence speed and better prediction accuracy on experiments.
