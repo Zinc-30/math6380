@@ -1,5 +1,7 @@
 %!TEX root = nips_2016.tex
 \section{introduction}
-We choosed combinatorial drug 20 efficacy data and participated in the kaggle inclass contest.  We are the team "3654". Our best submission gets \textbf{0.01193} Mean-Square-Error. 
-The dataset contains 140 cancer cell line samples in response to a combination of 20 drugs in 4 dosage levels. There are the discrete dosage levels of 20 drugs, and the real valued response as viability measured by difference between normalized cells and cancer cells. The higher is the viability, the more effective is the drug combination. 120 of the cells viability information are known, our job is to predict the rest 20 cells' viability.
-So the sample size of the datasets is 120, and the features dimension is 20. 
+We choosed Drug Sensitivity Ranking and participated in the kaggle inclass contest.  We are the team "3654". Our best submission gets accuracy of \textbf{94.74\%}
+The dataset provides 265 Drugs with experiments on 990 cancer cell lines. Drug sensitivity is measured by IC50. There are 3 million comparosion for defferent durgs on each cells, and the result can be 3 types. For example, in cell1, the drug1 may be more sensitivity than drug2, then the pair <drug1,drug2,cell1> will be 1. Among the 3M samples, 1/5 (.6M) comparison values are missing. Our job is to predict these values based on the information given. \\ 
+In particular, we also have the gene describtion of eath cell line, which is a binary genetic features of dimensionality 1250.
+
+
