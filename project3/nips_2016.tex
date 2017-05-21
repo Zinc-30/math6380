@@ -48,11 +48,10 @@
 \input{introduction}
 \input{model}
 \section{Methodology}
-\input{data_preprocessing}
+%\input{data_preprocessing}
 
-
-\subsection{feature engeneering}
-The feature dimension of this dataset is not quite high. And they all have actual meanings, presenting dosage levels of 20 different drugs. So we didn't manually create other features using their combinations.
+%\subsection{feature engeneering}
+%The feature dimension of this dataset is not quite high. And they all have actual meanings, presenting dosage levels of 20 different drugs. So we didn't manually create other features using their combinations.
 % To cope with the high-dimension of features and prevent the learning algorithms from overfitting, we performed dimension reduction or feature selection on features.  We compared severial regression methods including LASSO, Ridge Regression, Support Vector Regression, Decision Tree, and Gradient Boosting.  Two python packages:scikit-learn and pandas were used in the implementation. \\
 % We also manually implemented a recursive feature selection method from scratch based on Lasso regression errors on cross validation data. Different from Lasso recursive feature elimination in the reference poster which repeatly eliminates some features, our feature selection method repeatly add a feature until the Lasso regression error on validation dataset does not decrease. The advantage of our method is that it is more efficient than recursive feature elimination. 
 
