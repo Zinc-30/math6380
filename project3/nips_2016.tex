@@ -20,8 +20,8 @@
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
-
-\title{mini project2}
+\usepackage{amsmath}
+\title{mini project3}
 
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
@@ -48,6 +48,7 @@
 \input{introduction}
 \input{model}
 \section{Methodology}
+We tested both the original model (\textit{Original}) and the model with extension of $w_1$ (\textit{Extended}). For both models we used the same training settings, with epoch=1000, batch size=1000, learning rate=0.001, and initial weights following Gaussian distribution.
 %\input{data_preprocessing}
 
 %\subsection{feature engeneering}
@@ -55,41 +56,11 @@
 % To cope with the high-dimension of features and prevent the learning algorithms from overfitting, we performed dimension reduction or feature selection on features.  We compared severial regression methods including LASSO, Ridge Regression, Support Vector Regression, Decision Tree, and Gradient Boosting.  Two python packages:scikit-learn and pandas were used in the implementation. \\
 % We also manually implemented a recursive feature selection method from scratch based on Lasso regression errors on cross validation data. Different from Lasso recursive feature elimination in the reference poster which repeatly eliminates some features, our feature selection method repeatly add a feature until the Lasso regression error on validation dataset does not decrease. The advantage of our method is that it is more efficient than recursive feature elimination. 
 
-\subsection{model selection}
-In this part, We did 5-fold cross validation on the training dataset for model selection. Our models includes LASSO, Ridge Regression, Support Vector Regression, Elastic Net and Gradient Boosting. \\
-We think the key point of this project is how to tune the parameters.
+% \subsection{model selection}
+% In this part, We did 5-fold cross validation on the training dataset for model selection. Our models includes LASSO, Ridge Regression, Support Vector Regression, Elastic Net and Gradient Boosting. \\
+% We think the key point of this project is how to tune the parameters.
 
-\section{Results and Discussion}
-We first compare different regression method based on the Mean Square Error through 5-fold cross validation. The training errors are also included to check the overfitting. We then picked several models and trained them on the whole training dataset and submitted them on Kaggle.
-\begin{table}[htbp]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-model & validation error & training error \\
-\hline
-lasso($\alpha=0.005$)         &  0.013677 & 0.008775 \\
-\hline
-Elastic Net($\alpha=0.01,ratio_{l_1}=0.5$)   &  0.013680 & 0.008796 \\
-\hline
-ridge($\alpha=20$)         &  0.014146 & 0.009051 \\
-\hline
-bayes ridge($\alpha_1=10,\alpha_2=0.010$)  &  0.014197 & 0.008665 \\
-\hline
-svr        &  0.019456 & 0.006158 \\
-\hline
-lars       & 0.021611 & 0.020714 \\
-\hline
-kernel ridge($\alpha=0.01$)  &  0.021955 & 0.014500 \\
-\hline
-lasso Lars($\alpha=0.1$)    &  0.022331 & 0.021887 \\
-\hline
-boost         &  0.023385 & 0.000494 \\
-\hline
-\end{tabular}
-\caption{Cross validation results measured by mean square error for each method}
-\end{table}
-From the results in Table1, 
-We found is that the difference between these regression models' validation error is not quite big. And based on the result we get in the kaggle testing, all team get training error lower than 0.014. We think this problem is a simple task.
+\input{discussion}
 
 \section{Remark on Contributions}
 The project is finished under the discussion and close collaboration of our group members. Hao Xin wrote the code skeleton and wrote the majority of the report draft. Jinxing Yu tuned many regression methods and their parameters by cross validation and tried to get a better test result. Xun Jian proposed some feature selection method and implemented it, which got the best cross validation result.

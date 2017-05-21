@@ -26,7 +26,7 @@ Let $t = Ws + b$, $\hat{y}(k,i,j)\in \mathcal{R}^3$ be the one-hot encoding repr
 \frac{\partial \mathcal{L}}{\partial \beta_1(i)} &=  X(k) \frac{\partial \mathcal{L}}{\partial s} \\
 \frac{\partial \mathcal{L}}{\partial \beta_1(j)} &=  -X(k) \frac{\partial \mathcal{L}}{\partial s}
 \end{align*}
-Since the cell line feature $X_(k)$ is a binary feature vector, we also propose an extention to our model by adding model parameters $w_1 \in \mathcal{R}^ M$ to weight the cell line features. Then the rank score is modified as 
+Since the cell line feature $X(k)$ is a binary feature vector, we also propose an extention to our model by adding model parameters $w_1 \in \mathcal{R}^ M$ to weight the cell line features. Then the rank score is modified as 
 \begin{equation}
 s = \beta_0(i) - \beta_0(j) + (X(K) \odot w_1)^T (\beta_1(i) - \beta_1(j)),
 \end{equation}
